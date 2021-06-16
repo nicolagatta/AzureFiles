@@ -1,3 +1,7 @@
+# Action: Deny
+# Conditions: (type == VirtualMachines)  && (! VirtualMachine.sku in (standard_DS2_v3))
+# This policy denies creation of Virtual machine with a SKU different than standard_DS2_v3
+
 {
     "if": {
         "allof": [
