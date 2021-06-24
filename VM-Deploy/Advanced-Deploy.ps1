@@ -12,7 +12,7 @@
 # Define computer name VM name and VM Size
     $ComputerName = "advvm-vm"
     $VMName = "advvm-vm"
-    $VMSize = "Standard_DS3"
+    $VMSize = "Standard_DS3_v2"
 
 # Network Setup: Vnet, Subnet, PublicIP, NIC
     $NetworkName = "advvm-vnet"
@@ -33,10 +33,12 @@
  ####################################################
  # Second section: elements creation
  
+ New-AzResourceGroup -Name $ResourceGroupName -Location $LocationName
+ 
  # Create the subnet config
-    $SingleSubnet_1 = New-AzVirtualNetworkSubnetConfig -Name $SubnetName -AddressPrefix $SubnetAddressPrefix_1
+    $SingleSubnet_1 = New-AzVirtualNetworkSubnetConfig -Name $SubnetName_1 -AddressPrefix $SubnetAddressPrefix_1
     
-    $SingleSubnet_2 = New-AzVirtualNetworkSubnetConfig -Name $SubnetName -AddressPrefix $SubnetAddressPrefix_2
+    $SingleSubnet_2 = New-AzVirtualNetworkSubnetConfig -Name $SubnetName_2 -AddressPrefix $SubnetAddressPrefix_2
  
  # Create vnet with the associated subnet
     $Vnet = New-AzVirtualNetwork -Name $NetworkName -ResourceGroupName $ResourceGroupName -Location $LocationName -AddressPrefix $VnetAddressPrefix -Subnet $SingleSubnet_1,$SingleSubnet_2
@@ -70,7 +72,7 @@
 # 3. Get-AzVMImageSku (using Location, Publisher and Offer) to find the SKU (ex windows server 2012 Datacenter)
 # 4. Get-AzVMImage (using Location, Publisher, Offer and SKUs) to find the version of the product (latest)
 # Take note of the values and then set the Image into the config
-    $VirtualMachine = Set-AzVMSourceImage -VM $VirtualMachine -PublisherName 'MicrosoftWindowsServer' -Offer 'WindowsServer' -Skus '2016-Datacenter' -Version '2016.127.20190416'
+    $VirtualMachine = Set-AzVMSourceImage -VM $VirtualMachine -PublisherName 'MicrosoftWindowsServer' -Offer 'WindowsServer' -Skus '2016-Datacenter' -Version '14393.4467.2106061537'
 
 ####################################################
 # Finally! Create the virtual machine using Resourcegroup, Location and VM configuration
