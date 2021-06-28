@@ -1,7 +1,10 @@
-#This lab requires 
-# 1. virtual machine 
-# 2. Key vault es Retrieve required key vault properties:
+# This lab requires 
+# 1. Resource Group
+# 2. virtual machine 
+# 3. Key vault es Retrieve required key vault properties:
+# Keyvault and virtual machine in the same region (and to easy clean up, in the same resourcegroup)
 
+$RGName='my-Resourcegroup'
 $VmName='my-vm'
 $KeyVaultName='myencryptionvault'
 $KEK_Name='myKEK'
@@ -23,4 +26,4 @@ $myKEKVaultid = (Get-AzKeyVaultKey -Name "myKEK" -VaultName $KeyVaultName).Key.K
 
 # Encrypt the OS disk
 # Requires: Vmnane, keyvault id and URL, KEK Id and URL
-set-azVMDiskEncryptionExtension -ResourceGroupName "task-diskencrypt" -VMName $VmName -DiskEncryptionKeyVaultUrl $myKeyVaultURL -DiskEncryptionKeyVaultId  $myKeyVaultId -KeyEncryptionKeyUrl  $myKEKVaultURL -KeyEncryptionKeyVaultId $myKEKVaultid
+set-azVMDiskEncryptionExtension -ResourceGroupName $RGName -VMName $VmName -DiskEncryptionKeyVaultUrl $myKeyVaultURL -DiskEncryptionKeyVaultId  $myKeyVaultId -KeyEncryptionKeyUrl  $myKEKVaultURL -KeyEncryptionKeyVaultId $myKEKVaultid
